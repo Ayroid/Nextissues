@@ -1,5 +1,6 @@
 "use client";
 import FormErrorMessage from "@/app/components/FormErrorMessage";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 import { createIssueSchema } from "@/app/formValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, Text, TextField } from "@radix-ui/themes";
@@ -24,14 +25,18 @@ const NewIssuePage: React.FC = () => {
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = React.useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const router = useRouter();
 
   const submitCreateIssueForm = async (data: CreateIssueForm) => {
     try {
+      setIsSubmitting(true);
       await axios.post("/api/issues", data);
       router.push("/issues");
     } catch (error) {
       setError("Unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -62,7 +67,9 @@ const NewIssuePage: React.FC = () => {
           )}
         />
         <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
-        <Button type="submit">Submit Issue</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          Submit Issue {isSubmitting && <LoadingSpinner />}
+        </Button>
       </form>
     </div>
   );
