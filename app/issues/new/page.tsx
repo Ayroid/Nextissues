@@ -1,4 +1,5 @@
 "use client";
+import FormErrorMessage from "@/app/components/FormErrorMessage";
 import { createIssueSchema } from "@/app/formValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, Text, TextField } from "@radix-ui/themes";
@@ -52,11 +53,7 @@ const NewIssuePage: React.FC = () => {
           placeholder="Issue Title"
           {...register("title", { required: true })}
         />
-        {errors.title && (
-          <Text color="red" as="p">
-            {errors.title.message}
-          </Text>
-        )}
+        <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
         <Controller
           name="description"
           control={control}
@@ -64,11 +61,7 @@ const NewIssuePage: React.FC = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-        {errors.description && (
-          <Text color="red" as="p">
-            {errors.description.message}
-          </Text>
-        )}
+        <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
         <Button type="submit">Submit Issue</Button>
       </form>
     </div>
