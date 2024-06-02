@@ -1,7 +1,10 @@
-import { link } from "fs";
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import { IoBug } from "react-icons/io5";
+import { usePathname } from "next/navigation";
+import classnames from "classnames";
 
 const Navbar = () => {
   const links = [
@@ -15,6 +18,8 @@ const Navbar = () => {
     },
   ];
 
+  const pathname = usePathname();
+
   return (
     <div className="flex px-5 h-16 border-b mb-5 space-x-5 items-center">
       <Link href={"/"}>
@@ -24,7 +29,10 @@ const Navbar = () => {
         {links.map((link) => (
           <li
             key={link.href}
-            className="text-zinc-500 hover:text-zinc-800 transition-colors"
+            className={classnames("transition-colors", "hover:text-zinc-800", {
+              "text-zinc-800": pathname === link.href,
+              "text-zinc-500": pathname !== link.href,
+            })}
           >
             <Link href={link.href}>{link.name}</Link>
           </li>
