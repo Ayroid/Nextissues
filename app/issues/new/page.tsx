@@ -1,9 +1,8 @@
 "use client";
-import FormErrorMessage from "@/app/components/FormErrorMessage";
-import LoadingSpinner from "@/app/components/LoadingSpinner";
+import { FormErrorMessage, LoadingSpinner } from "@/app/components/";
 import { createIssueSchema } from "@/app/formValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Callout, Text, TextField } from "@radix-ui/themes";
+import { Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";

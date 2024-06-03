@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
 import { Text } from "@radix-ui/themes";
+import { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;

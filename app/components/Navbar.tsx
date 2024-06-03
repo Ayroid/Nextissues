@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import React from "react";
-import { IoBug } from "react-icons/io5";
-import { usePathname } from "next/navigation";
 import classnames from "classnames";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { IoBug } from "react-icons/io5";
 
 const Navbar = () => {
   const links = [
