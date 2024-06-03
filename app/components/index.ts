@@ -1,4 +1,4 @@
-export { default as IssueActions } from "./IssueActions";
+export { default as IssueActions } from "../issues/_components/IssueActions";
 export { default as IssueStatusBadge } from "./IssueStatusBadge";
 export { default as Link } from "./Link";
 export { default as FormErrorMessage } from "./FormErrorMessage";
