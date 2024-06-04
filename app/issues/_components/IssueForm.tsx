@@ -17,7 +17,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-type CreateIssueForm = z.infer<typeof issueSchema>;
+type issueForm = z.infer<typeof issueSchema>;
 
 interface Props {
   issue?: Issue;
@@ -29,17 +29,21 @@ const IssueForm = ({ issue }: Props) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateIssueForm>({
+  } = useForm<issueForm>({
     resolver: zodResolver(issueSchema),
   });
   const [error, setError] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const router = useRouter();
 
-  const submitCreateIssueForm = async (data: CreateIssueForm) => {
+  const submitIssueForm = async (data: issueForm) => {
     try {
       setIsSubmitting(true);
-      await axios.post("/api/issues", data);
+      if (issue) {
+        await axios.patch("/api/issues/" + issue.id, data);
+      } else {
+        await axios.post("/api/issues", data);
+      }
       router.push("/issues");
     } catch (error) {
       setError("Unexpected error occurred. Please try again.");
@@ -58,10 +62,7 @@ const IssueForm = ({ issue }: Props) => {
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form
-        className="space-y-3"
-        onSubmit={handleSubmit(submitCreateIssueForm)}
-      >
+      <form className="space-y-3" onSubmit={handleSubmit(submitIssueForm)}>
         <TextField.Root
           placeholder="Issue Title"
           defaultValue={issue?.title}
@@ -78,7 +79,8 @@ const IssueForm = ({ issue }: Props) => {
         />
         <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
         <Button type="submit" disabled={isSubmitting}>
-          Submit Issue {isSubmitting && <LoadingSpinner />}
+          {issue ? "Update Issue" : "Submit Issue"}{" "}
+          {isSubmitting && <LoadingSpinner />}
         </Button>
       </form>
     </div>
