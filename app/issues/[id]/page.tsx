@@ -2,6 +2,7 @@ import { IssueDetails } from "@/app/components/";
 import { EditIssueTabs } from "@/app/issues/_components/";
 import prisma from "@/prisma/client";
 import { Box, Grid } from "@radix-ui/themes";
+import delay from "delay";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const IssuePage = async ({ params: { id } }: Props) => {
+  await delay(2000);
+
   const issue = await prisma.issue.findUnique({
     where: {
       id: id,
@@ -21,7 +24,7 @@ const IssuePage = async ({ params: { id } }: Props) => {
 
   return (
     <Grid columns={{ initial: "1", sm: "5" }} gap="5">
-      <Box className="md:col-span-4 ">
+      <Box className="md:col-span-4">
         <IssueDetails issue={issue} />
       </Box>
       <Box>

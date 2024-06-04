@@ -7,7 +7,7 @@ const loading = () => {
     <div>
       <Skeleton height="2rem" width="5rem" className="mb-5" />
       {issues.map((issue) => (
-        <Flex key={issue} my="3" gap="3">
+        <Flex key={issue} my="2" gap="2">
           <Skeleton width="100%" height="2rem" />
           <Skeleton
             width="100%"
