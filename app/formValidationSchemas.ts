@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const createIssueSchema = z.object({
+const issueSchema = z.object({
   title: z
     .string()
     .min(3, "Title should be atleast 3 characters long")
@@ -10,3 +10,5 @@ export const createIssueSchema = z.object({
     .min(0, "Please provide a description")
     .max(1000, "Description too long"),
 });
+
+export { issueSchema };
