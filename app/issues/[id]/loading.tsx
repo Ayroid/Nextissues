@@ -1,6 +1,10 @@
+import authOptions from "@/app/auth/authOptions";
 import { Card, Flex, Skeleton, Grid, Box } from "@radix-ui/themes";
+import { getServerSession } from "next-auth";
 
-const LoadingIssuePage = () => {
+const LoadingIssuePage = async () => {
+  const session = await getServerSession(authOptions);
+
   return (
     <Grid columns={{ initial: "1", sm: "5" }} gap="5">
       <Box className="md:col-span-4">
@@ -20,10 +24,12 @@ const LoadingIssuePage = () => {
           <Skeleton height="1.5rem" className="my-2" />
         </Card>
       </Box>
-      <Flex direction="column" gap="2">
-        <Skeleton height="2rem" width="100%" />
-        <Skeleton height="2rem" width="100%" />
-      </Flex>
+      {session && (
+        <Flex direction="column" gap="2">
+          <Skeleton height="2rem" width="100%" />
+          <Skeleton height="2rem" width="100%" />
+        </Flex>
+      )}
     </Grid>
   );
 };

@@ -1,8 +1,9 @@
+import authOptions from "@/app/auth/authOptions";
 import { IssueDetails } from "@/app/components/";
 import { EditIssueTabs } from "@/app/issues/_components/";
 import prisma from "@/prisma/client";
 import { Box, Grid } from "@radix-ui/themes";
-import delay from "delay";
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -11,8 +12,8 @@ interface Props {
   };
 }
 
-const IssuePage = async ({ params: { id } }: Props) => {
-  await delay(2000);
+const IssueDetailsPage = async ({ params: { id } }: Props) => {
+  const session = await getServerSession(authOptions);
 
   const issue = await prisma.issue.findUnique({
     where: {
@@ -27,11 +28,13 @@ const IssuePage = async ({ params: { id } }: Props) => {
       <Box className="md:col-span-4">
         <IssueDetails issue={issue} />
       </Box>
-      <Box>
-        <EditIssueTabs issueId={id} />
-      </Box>
+      {session && (
+        <Box>
+          <EditIssueTabs issueId={id} />
+        </Box>
+      )}
     </Grid>
   );
 };
 
-export default IssuePage;
+export default IssueDetailsPage;
