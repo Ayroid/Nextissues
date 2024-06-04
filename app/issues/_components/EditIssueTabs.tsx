@@ -1,5 +1,5 @@
 import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
-import { Button, Flex } from "@radix-ui/themes";
+import { Button, Flex, AlertDialog } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
 
@@ -17,10 +17,30 @@ const EditIssueTabs = ({ issueId }: Props) => {
         </Button>
       </Link>
 
-      <Button color="red" style={{ width: "100%" }}>
-        <TrashIcon />
-        Delete Issue
-      </Button>
+      <AlertDialog.Root>
+        <AlertDialog.Trigger>
+          <Button color="red" style={{ width: "100%" }}>
+            <TrashIcon />
+            Delete Issue
+          </Button>
+        </AlertDialog.Trigger>
+        <AlertDialog.Content maxWidth="25rem">
+          <AlertDialog.Title>Confirm Issue Deletion</AlertDialog.Title>
+          <AlertDialog.Description>
+            Are you sure you want to delete this issue?
+          </AlertDialog.Description>
+          <Flex gap="2" mt="5">
+            <AlertDialog.Cancel>
+              <Button variant="soft" color="gray">
+                Cancel
+              </Button>
+            </AlertDialog.Cancel>
+            <AlertDialog.Action>
+              <Button color="red">Delete</Button>
+            </AlertDialog.Action>
+          </Flex>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
     </Flex>
   );
 };
