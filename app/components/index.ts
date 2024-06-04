@@ -4,5 +4,5 @@ export { default as Link } from "./Link";
 export { default as FormErrorMessage } from "./FormErrorMessage";
 export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as Navbar } from "./Navbar";
-export { default as EditIssueTabs } from "./EditIssueTabs";
+export { default as EditIssueTabs } from "../issues/_components/EditIssueTabs";
 export { default as IssueDetails } from "./IssueDetails";
