@@ -5,13 +5,26 @@ import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface Props {
   issueId: string;
 }
 
-const EditIssueTabs = ({ issueId }: Props) => {
+const EditIssueButton = ({ issueId }: Props) => {
+  return (
+    <Link href={`/issues/${issueId}/edit`}>
+      <Button style={{ width: "100%" }}>
+        <Pencil2Icon />
+        Edit Issue
+      </Button>
+    </Link>
+  );
+};
+
+const DeleteIssueButton = ({ issueId }: Props) => {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   const deleteIssue = async (issueId: string) => {
     try {
@@ -19,19 +32,12 @@ const EditIssueTabs = ({ issueId }: Props) => {
       router.push("/issues");
       router.refresh();
     } catch (error) {
-      console.error(error);
+      setError("Unexpected error occurred. Please try again.");
     }
   };
 
   return (
-    <Flex direction="column" gap="2">
-      <Link href={`/issues/${issueId}/edit`}>
-        <Button style={{ width: "100%" }}>
-          <Pencil2Icon />
-          Edit Issue
-        </Button>
-      </Link>
-
+    <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
           <Button color="red" style={{ width: "100%" }}>
@@ -58,6 +64,31 @@ const EditIssueTabs = ({ issueId }: Props) => {
           </Flex>
         </AlertDialog.Content>
       </AlertDialog.Root>
+      <AlertDialog.Root open={error !== null}>
+        <AlertDialog.Content maxWidth="25rem">
+          <AlertDialog.Title>Issue Deletion Error</AlertDialog.Title>
+          <AlertDialog.Description>{error}</AlertDialog.Description>
+          <AlertDialog.Action>
+            <Button
+              mt="5"
+              variant="soft"
+              color="gray"
+              onClick={() => setError(null)}
+            >
+              Okay
+            </Button>
+          </AlertDialog.Action>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+    </>
+  );
+};
+
+const EditIssueTabs = ({ issueId }: Props) => {
+  return (
+    <Flex direction="column" gap="2">
+      <EditIssueButton issueId={issueId} />
+      <DeleteIssueButton issueId={issueId} />
     </Flex>
   );
 };
