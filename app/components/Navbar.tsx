@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Avatar,
-  Box,
-  DropdownMenu,
-  Flex,
-  Text
-} from "@radix-ui/themes";
+import { Avatar, Box, DropdownMenu, Flex, Text } from "@radix-ui/themes";
 import classnames from "classnames";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -76,15 +70,15 @@ const Navbar = () => {
                         radius="full"
                         className="cursor-pointer"
                       />
-                      <Text>{session.user?.name}</Text>
+                      <Text className="font-bold text-zinc-800">
+                        {session.user?.name}
+                      </Text>
                     </DropdownMenu.Label>
-                    <DropdownMenu.Item>
-                      <Link href="/api/auth/signout">Sign Out</Link>
-                    </DropdownMenu.Item>
+                    <Link href="/api/auth/signout">
+                      <DropdownMenu.Item>Sign Out</DropdownMenu.Item>
+                    </Link>
                   </DropdownMenu.Content>
                 </DropdownMenu.Root>
-
-                {/* <Link href="/api/auth/signout">Sign Out</Link> */}
               </li>
             ) : (
               <li className="transition-colors hover:text-zinc-800">
