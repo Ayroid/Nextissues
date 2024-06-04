@@ -10,8 +10,12 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuInfo } from "react-icons/lu";
-import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
+import dynamic from "next/dynamic";
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 
 type CreateIssueForm = z.infer<typeof createIssueSchema>;
 
