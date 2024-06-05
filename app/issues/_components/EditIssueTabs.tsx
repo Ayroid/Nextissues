@@ -7,6 +7,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import AssigneeSelect from "./AssigneeSelect";
 
 interface Props {
   issueId: string;
@@ -93,6 +94,7 @@ const DeleteIssueButton = ({ issueId }: Props) => {
 const EditIssueTabs = ({ issueId }: Props) => {
   return (
     <Flex direction="column" gap="2">
+      <AssigneeSelect />
       <EditIssueButton issueId={issueId} />
       <DeleteIssueButton issueId={issueId} />
     </Flex>
