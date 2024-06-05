@@ -3,9 +3,9 @@ import { IssueDetails } from "@/app/components/";
 import { EditIssueTabs } from "@/app/issues/_components/";
 import prisma from "@/prisma/client";
 import { Box, Grid } from "@radix-ui/themes";
-import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 interface Props {
   params: {
@@ -13,14 +13,20 @@ interface Props {
   };
 }
 
+// THIS WILL FETCH DATA ONCE AND CACHE IT
+
+const fetchIssue = cache((issueId: string) =>
+  prisma.issue.findUnique({
+    where: {
+      id: issueId,
+    },
+  })
+);
+
 const IssueDetailsPage = async ({ params: { id } }: Props) => {
   const session = await getServerSession(authOptions);
 
-  const issue = await prisma.issue.findUnique({
-    where: {
-      id: id,
-    },
-  });
+  const issue = await fetchIssue(id);
 
   if (!issue) notFound();
 
@@ -39,11 +45,7 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
 };
 
 export async function generateMetadata({ params: { id } }: Props) {
-  const issue = await prisma.issue.findUnique({
-    where: {
-      id: id,
-    },
-  });
+  const issue = await fetchIssue(id);
 
   return {
     title: `${issue?.title}`,
