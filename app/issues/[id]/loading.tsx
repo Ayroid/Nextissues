@@ -28,6 +28,7 @@ const LoadingIssuePage = async () => {
         <Flex direction="column" gap="2">
           <Skeleton height="2rem" width="100%" />
           <Skeleton height="2rem" width="100%" />
+          <Skeleton height="2rem" width="100%" />
         </Flex>
       )}
     </Grid>
