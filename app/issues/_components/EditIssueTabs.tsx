@@ -8,14 +8,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AssigneeSelect from "./AssigneeSelect";
+import { Issue } from "@prisma/client";
 
 interface Props {
-  issueId: string;
+  issue: Issue;
 }
 
-const EditIssueButton = ({ issueId }: Props) => {
+const EditIssueButton = ({ issue }: Props) => {
   return (
-    <Link href={`/issues/${issueId}/edit`}>
+    <Link href={`/issues/${issue.id}/edit`}>
       <Button style={{ width: "100%" }}>
         <Pencil2Icon />
         Edit Issue
@@ -24,7 +25,7 @@ const EditIssueButton = ({ issueId }: Props) => {
   );
 };
 
-const DeleteIssueButton = ({ issueId }: Props) => {
+const DeleteIssueButton = ({ issue }: Props) => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
@@ -64,7 +65,7 @@ const DeleteIssueButton = ({ issueId }: Props) => {
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-              <Button color="red" onClick={() => deleteIssue(issueId)}>
+              <Button color="red" onClick={() => deleteIssue(issue.id)}>
                 Delete
               </Button>
             </AlertDialog.Action>
@@ -91,12 +92,12 @@ const DeleteIssueButton = ({ issueId }: Props) => {
   );
 };
 
-const EditIssueTabs = ({ issueId }: Props) => {
+const EditIssueTabs = ({ issue }: Props) => {
   return (
     <Flex direction="column" gap="2">
-      <AssigneeSelect />
-      <EditIssueButton issueId={issueId} />
-      <DeleteIssueButton issueId={issueId} />
+      <AssigneeSelect issue={issue} />
+      <EditIssueButton issue={issue} />
+      <DeleteIssueButton issue={issue} />
     </Flex>
   );
 };

@@ -30,7 +30,7 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
       </Box>
       {session && (
         <Box>
-          <EditIssueTabs issueId={id} />
+          <EditIssueTabs issue={issue} />
         </Box>
       )}
     </Grid>
