@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
 import IssueChart from "./components/IssueChart";
-import { Flex, Grid } from "@radix-ui/themes";
+import { Flex, Grid, Heading, Separator, Box, Card } from "@radix-ui/themes";
 import IssueSummary from "./components/IssueSummary";
 import LatestIssues from "./components/LatestIssues";
 
@@ -20,22 +20,27 @@ const Home = async () => {
       status: "CLOSED",
     },
   });
+
+  const issues = {
+    open: openIssues,
+    inProgress: inProgressIssues,
+    closed: closedIssues,
+  };
+
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap="5">
-      <Flex direction="column" gap="5">
-        <IssueSummary
-          open={openIssues}
-          inProgress={inProgressIssues}
-          closed={closedIssues}
-        />
-        <IssueChart
-          open={openIssues}
-          inProgress={inProgressIssues}
-          closed={closedIssues}
-        />
-      </Flex>
-      <LatestIssues />
-    </Grid>
+    <Flex direction="column" gap="9">
+      <Heading size="8" className="inline">
+        Dashboard
+      </Heading>
+      <Grid columns={{ initial: "1", md: "2" }} gap="9">
+        <Flex direction="column" gap="5">
+          <IssueSummary issues={issues} />
+          <Separator my="3" size="4" />
+          <IssueChart issues={issues} />
+        </Flex>
+        <LatestIssues />
+      </Grid>
+    </Flex>
   );
 };
 
