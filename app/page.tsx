@@ -1,6 +1,7 @@
 import prisma from "@/prisma/client";
+import { Flex, Grid, Heading, Separator } from "@radix-ui/themes";
+import { Metadata } from "next";
 import IssueChart from "./components/IssueChart";
-import { Flex, Grid, Heading, Separator, Box, Card } from "@radix-ui/themes";
 import IssueSummary from "./components/IssueSummary";
 import LatestIssues from "./components/LatestIssues";
 
@@ -42,6 +43,11 @@ const Home = async () => {
       </Grid>
     </Flex>
   );
+};
+
+export const metadata: Metadata = {
+  title: "Nextissues - Dashboard",
+  description: "Dashboard for the issues tracker",
 };
 
 export default Home;
