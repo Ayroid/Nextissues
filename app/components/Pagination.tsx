@@ -12,16 +12,15 @@ import React from "react";
 
 interface Props {
   currentPage: number;
-  totalPages: number;
+  totalItems: number;
   itemsPerPage: number;
 }
 
-const Pagination = ({ currentPage, totalPages, itemsPerPage }: Props) => {
+const Pagination = ({ currentPage, totalItems, itemsPerPage }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const pageCount = Math.ceil(totalPages / itemsPerPage);
-  if (pageCount <= 1) return null;
+  const pageCount = Math.ceil(totalItems / itemsPerPage);
 
   const changePage = (page: number) => {
     const params = new URLSearchParams(searchParams);
@@ -31,9 +30,6 @@ const Pagination = ({ currentPage, totalPages, itemsPerPage }: Props) => {
 
   return (
     <Flex align="center" gap="2">
-      <Text>
-        Page {currentPage} of {pageCount}
-      </Text>
       <Button
         color="gray"
         variant="outline"
@@ -50,6 +46,10 @@ const Pagination = ({ currentPage, totalPages, itemsPerPage }: Props) => {
       >
         <ChevronLeftIcon />
       </Button>
+
+      <Text mx="5">
+        Page {currentPage} of {pageCount}
+      </Text>
 
       <Button
         color="gray"

@@ -11,7 +11,7 @@ export default function Home({ searchParams: { page } }: Props) {
     <Pagination
       currentPage={parseInt(page) || 1}
       itemsPerPage={10}
-      totalPages={100}
+      totalItems={100}
     />
   );
 }
