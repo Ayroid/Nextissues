@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import IssueSummary from "./components/IssueSummary";
+import IssueChart from "./components/IssueChart";
 
 const Home = async () => {
   const openIssues = await prisma.issue.count({
@@ -18,7 +18,7 @@ const Home = async () => {
     },
   });
   return (
-    <IssueSummary
+    <IssueChart
       open={openIssues}
       inProgress={inProgressIssues}
       closed={closedIssues}
