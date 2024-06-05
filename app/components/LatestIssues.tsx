@@ -2,7 +2,6 @@ import prisma from "@/prisma/client";
 import { Avatar, Card, Flex, Heading, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import IssueStatusBadge from "./IssueStatusBadge";
-import Head from "next/head";
 
 const LatestIssues = async () => {
   const issues = await prisma.issue.findMany({
@@ -16,7 +15,9 @@ const LatestIssues = async () => {
   });
   return (
     <Card>
-      <Heading size="6" mb="2">Latest Issues</Heading>
+      <Heading size="6" mb="2">
+        Latest Issues
+      </Heading>
       <Table.Root>
         <Table.Body>
           {issues.map((issue) => (
